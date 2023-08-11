@@ -10,6 +10,8 @@
  * https://github.com/charcoal-dev/buffers/blob/master/LICENSE
  */
 
+declare(strict_types=1);
+
 /**
  * Class ByteReaderTests
  */

@@ -10,6 +10,8 @@
  * https://github.com/charcoal-dev/buffers/blob/master/LICENSE
  */
 
+declare(strict_types=1);
+
 /**
  * Class BufferManipulationTest
  */
@@ -22,7 +24,7 @@ class BufferManipulationTest extends \PHPUnit\Framework\TestCase
     public function testAsString(): void
     {
         $buffer = \Charcoal\Buffers\Buffer::fromBase16("63686172636f616c");
-        $this->assertEquals(8, strlen($buffer));
+        $this->assertEquals(8, strlen((string)$buffer));
         $this->assertEquals("charcoal", strval($buffer));
     }
 
