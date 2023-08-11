@@ -115,7 +115,7 @@ class ByteDigest
     }
 
     /**
-     * @return string|Buffer
+     * @return string|\Charcoal\Buffers\Frames\Bytes20
      */
     public function sha1(): string|Bytes20
     {
@@ -123,7 +123,7 @@ class ByteDigest
     }
 
     /**
-     * @return string|Buffer
+     * @return string|\Charcoal\Buffers\Frames\Bytes32
      */
     public function sha256(): string|Bytes32
     {
@@ -131,7 +131,7 @@ class ByteDigest
     }
 
     /**
-     * @return string|Buffer
+     * @return string|\Charcoal\Buffers\Buffer
      */
     public function sha512(): string|Buffer
     {
