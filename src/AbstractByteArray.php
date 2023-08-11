@@ -154,7 +154,7 @@ abstract class AbstractByteArray implements BuffersBridgeInterface
      */
     public function toBinary(bool $padded8bits = false): array
     {
-        $bA = $this->byteArray();
+        $bA = $this->toByteArray();
         $bin = [];
         foreach ($bA as $byte) {
             $bin[] = $padded8bits ? str_pad(decbin($byte), 8, "0", STR_PAD_LEFT) : decbin($byte);
@@ -249,7 +249,7 @@ abstract class AbstractByteArray implements BuffersBridgeInterface
     /**
      * @return array
      */
-    public function byteArray(): array
+    public function toByteArray(): array
     {
         $bA = [];
         for ($i = 0; $i < $this->len; $i++) {
@@ -345,7 +345,7 @@ abstract class AbstractByteArray implements BuffersBridgeInterface
     public function dump(): array
     {
         return [
-            "bytes" => $this->byteArray(),
+            "bytes" => $this->toByteArray(),
             "size" => $this->len,
             "readOnly" => $this->readOnly,
         ];
