@@ -153,7 +153,10 @@ class ByteDigest
      */
     private function result(string $raw, ?bool $returnStr = null): string|Buffer
     {
-        return $returnStr === true || !$this->returnBuffer ?
-            $raw : (new Buffer($raw))->readOnly();
+        if (is_bool($returnStr)) {
+            return $returnStr ? $raw : (new Buffer($raw))->readOnly();
+        }
+
+        return $this->returnBuffer ? (new Buffer($raw))->readOnly() : $raw;
     }
 }
