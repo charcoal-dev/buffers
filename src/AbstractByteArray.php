@@ -20,7 +20,7 @@ use Charcoal\Adapters\GMP\BuffersBridgeInterface;
  * Class AbstractByteArray
  * @package Charcoal\Buffers
  */
-abstract class AbstractByteArray implements BuffersBridgeInterface
+abstract class AbstractByteArray implements BuffersBridgeInterface, \Stringable
 {
     /** @var string */
     protected string $data = "";
