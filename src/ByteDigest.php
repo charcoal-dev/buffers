@@ -52,7 +52,7 @@ class ByteDigest
      * @param int $iterations
      * @param int|null $len
      * @param bool|null $returnString
-     * @return string|\Charcoal\Buffers\AbstractByteArray
+     * @return string|\Charcoal\Buffers\Buffer
      */
     public function hash(string $algo, int $iterations = 1, ?int $len = null, ?bool $returnString = null): string|Buffer
     {
@@ -76,7 +76,7 @@ class ByteDigest
      * @param string $algo
      * @param \Charcoal\Buffers\AbstractByteArray|string $key
      * @param bool|null $returnString
-     * @return string|\Charcoal\Buffers\AbstractByteArray
+     * @return string|\Charcoal\Buffers\Buffer
      */
     public function hmac(string $algo, AbstractByteArray|string $key, ?bool $returnString = null): string|Buffer
     {
@@ -94,7 +94,7 @@ class ByteDigest
      * @param int $iterations
      * @param int $len
      * @param bool|null $returnString
-     * @return string|\Charcoal\Buffers\AbstractByteArray
+     * @return string|\Charcoal\Buffers\Buffer
      */
     public function pbkdf2(string $algo, AbstractByteArray|string $salt, int $iterations, int $len = 0, ?bool $returnString = null): string|Buffer
     {
