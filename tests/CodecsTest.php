@@ -32,4 +32,27 @@ class CodecsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($frame1->toBase16(), $hex, "Compare hex strings");
         $this->assertEquals($frame1->raw(), $raw, "Compare raw strings");
     }
+
+    /**
+     * @return void
+     */
+    public function testByteArray(): void
+    {
+        $buffer = \Charcoal\Buffers\Buffer::fromBase16("73616d706c65");
+        $this->assertEquals([115, 97, 109, 112, 0x6c, 0x65], $buffer->toByteArray());
+    }
+
+    /**
+     * @return void
+     */
+    public function testByteArrayWithUTF8(): void
+    {
+        $bA = [217, 129, 216, 177, 217, 130, 216, 167, 217, 134];
+        $buffer2 = \Charcoal\Buffers\Buffer::fromByteArray($bA);
+        $this->assertNotEquals("فرقا", $buffer2->raw());
+        $this->assertEquals("فرقان", $buffer2->raw());
+
+        $buffer3 = new \Charcoal\Buffers\Buffer("فرقان");
+        $this->assertEquals($bA, $buffer3->toByteArray());
+    }
 }
