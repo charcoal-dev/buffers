@@ -20,6 +20,28 @@ class CodecsTest extends \PHPUnit\Framework\TestCase
     /**
      * @return void
      */
+    public function testSerialize(): void
+    {
+        $buffer = new \Charcoal\Buffers\Buffer("charcoal");
+        $ser1 = serialize($buffer);
+        $ser2 = serialize($buffer->hash()->sha1());
+
+        /** @var \Charcoal\Buffers\AbstractByteArray $restored1 */
+        $restored1 = unserialize($ser1);
+        /** @var \Charcoal\Buffers\AbstractByteArray $restored2 */
+        $restored2 = unserialize($ser2);
+
+        $this->assertInstanceOf(\Charcoal\Buffers\Buffer::class, $restored1);
+        $this->assertEquals(8, $restored1->len());
+        $this->assertEquals("charcoal", $restored1->raw());
+
+        $this->assertInstanceOf(\Charcoal\Buffers\Frames\Bytes20::class, $restored2);
+        $this->assertEquals(20, $restored2->len());
+    }
+
+    /**
+     * @return void
+     */
     public function testBase16(): void
     {
         $raw = hash("sha256", "furqansiddiqui", true);
