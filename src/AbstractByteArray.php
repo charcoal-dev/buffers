@@ -75,16 +75,15 @@ abstract class AbstractByteArray implements BuffersBridgeInterface
     }
 
     /**
-     * @param bool $prefix
      * @return string
      */
-    public function toBase16(bool $prefix = false): string
+    public function toBase16(): string
     {
         $hexits = bin2hex($this->raw());
         if (strlen($hexits) % 2 !== 0) {
             $hexits = "0" . $hexits;
         }
-        return $prefix ? "0x" . $hexits : $hexits;
+        return $hexits;
     }
 
     /**
