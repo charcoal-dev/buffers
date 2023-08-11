@@ -55,4 +55,16 @@ class CodecsTest extends \PHPUnit\Framework\TestCase
         $buffer3 = new \Charcoal\Buffers\Buffer("فرقان");
         $this->assertEquals($bA, $buffer3->toByteArray());
     }
+
+    /**
+     * @return void
+     */
+    public function testBase64(): void
+    {
+        $string = "YjY0AHRlc3Q=";
+        $buffer = \Charcoal\Buffers\Buffer::fromBase64($string);
+        $this->assertNotEquals("b64 test", $buffer->raw());
+        $this->assertEquals("b64\0test", $buffer->raw());
+        $this->assertEquals($string, $buffer->toBase64());
+    }
 }
