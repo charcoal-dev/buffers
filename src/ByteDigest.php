@@ -107,25 +107,25 @@ class ByteDigest
     }
 
     /**
-     * @return string|\Charcoal\Buffers\Frames\Bytes16
+     * @return \Charcoal\Buffers\Frames\Bytes16
      */
-    public function md5(): string|Bytes16
+    public function md5(): Bytes16
     {
         return new Bytes16($this->hash("md5", returnString: true));
     }
 
     /**
-     * @return string|\Charcoal\Buffers\Frames\Bytes20
+     * @return \Charcoal\Buffers\Frames\Bytes20
      */
-    public function sha1(): string|Bytes20
+    public function sha1(): Bytes20
     {
         return new Bytes20($this->hash("sha1", returnString: true));
     }
 
     /**
-     * @return string|\Charcoal\Buffers\Frames\Bytes32
+     * @return \Charcoal\Buffers\Frames\Bytes32
      */
-    public function sha256(): string|Bytes32
+    public function sha256(): Bytes32
     {
         return new Bytes32($this->hash("sha256", returnString: true));
     }
@@ -139,9 +139,9 @@ class ByteDigest
     }
 
     /**
-     * @return string|\Charcoal\Buffers\Frames\Bytes20
+     * @return \Charcoal\Buffers\Frames\Bytes20
      */
-    public function ripeMd160(): string|Bytes20
+    public function ripeMd160(): Bytes20
     {
         return new Bytes20($this->hash("ripemd160", returnString: true));
     }
