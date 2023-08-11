@@ -13,7 +13,7 @@
 /**
  * Class ByteReaderTests
  */
-class ByteReaderTests extends \PHPUnit\Framework\TestCase
+class ByteReaderTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @return void
