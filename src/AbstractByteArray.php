@@ -54,21 +54,19 @@ abstract class AbstractByteArray implements BuffersBridgeInterface, \Stringable
      */
     public static function fromBase16(string $hex): static
     {
-        if ($hex) {
-            // Validate string as Hexadecimal
-            if (!preg_match('/^(0x)?[a-f0-9]+$/i', $hex)) {
-                throw new \InvalidArgumentException('Cannot instantiate Buffer; expected Base16/Hexadecimal string');
-            }
+        // Validate string as Hexadecimal
+        if (!preg_match('/^(0x)?[a-f0-9]+$/i', $hex)) {
+            throw new \InvalidArgumentException('Cannot instantiate Buffer; expected Base16/Hexadecimal string');
+        }
 
-            // Remove the "0x" prefix
-            if (str_starts_with($hex, "0x")) {
-                $hex = substr($hex, 2);
-            }
+        // Remove the "0x" prefix
+        if (str_starts_with($hex, "0x")) {
+            $hex = substr($hex, 2);
+        }
 
-            // Evens-out odd number of hexits
-            if (strlen($hex) % 2 !== 0) {
-                $hex = "0" . $hex;
-            }
+        // Evens-out odd number of hexits
+        if (strlen($hex) % 2 !== 0) {
+            $hex = "0" . $hex;
         }
 
         return new static(hex2bin($hex));
