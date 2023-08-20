@@ -46,4 +46,13 @@ abstract class AbstractFixedLenBuffer extends AbstractByteArray
 
         parent::setBuffer($bytes);
     }
+
+    /**
+     * @return static
+     * @throws \Exception
+     */
+    public static function fromRandomBytes(): static
+    {
+        return new static(random_bytes(static::SIZE));
+    }
 }

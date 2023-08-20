@@ -58,4 +58,20 @@ class FramesTest extends \PHPUnit\Framework\TestCase
         $this->expectException('LengthException');
         new \Charcoal\Buffers\Frames\Bytes20P(hash("sha256", "furqansiddiqui", true));
     }
+
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    public function testFromRandom(): void
+    {
+        $b16 = \Charcoal\Buffers\Frames\Bytes16::fromRandomBytes();
+        $this->assertEquals(16, $b16->len());
+        $b20 = \Charcoal\Buffers\Frames\Bytes20::fromRandomBytes();
+        $this->assertEquals(20, $b20->len());
+        $b20 = \Charcoal\Buffers\Frames\Bytes32::fromRandomBytes();
+        $this->assertEquals(32, $b20->len());
+        $b20 = \Charcoal\Buffers\Frames\Bytes32P::fromRandomBytes();
+        $this->assertEquals(32, $b20->len());
+    }
 }
