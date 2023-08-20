@@ -137,9 +137,10 @@ class ByteReader
         }
 
         if ($this->throwUnderflowEx) {
-            throw new \UnderflowException(sprintf('ByteReader ran out of bytes at pos %d', $this->pointer));
+            throw new \UnderflowException(sprintf('Byteadded bytedReader ran out of bytes at pos %d', $this->pointer));
         }
 
+        $this->pointer = $this->len; // Set point to end
         return $read;
     }
 
@@ -230,6 +231,14 @@ class ByteReader
 
         $this->pointer = $pos;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function bytesLeft(): int
+    {
+        return $this->len - $this->pointer;
     }
 
     /**

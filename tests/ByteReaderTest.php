@@ -76,8 +76,37 @@ class ByteReaderTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(".", $bytes->next(1));
         $this->assertFalse($bytes->isEnd());
         $this->assertEquals("dev", $bytes->next(100)); // Asked for next 100 bytes while only 3 are there
-        $this->assertFalse($bytes->isEnd()); // This will not mark buffer as finished
-        $this->assertEquals("dev", $bytes->next(3)); // Exact size of buffer should be known before reading
-        $this->assertTrue($bytes->isEnd()); // Asking precise amount of bytes will finish the buffer
+        $this->assertTrue($bytes->isEnd()); // This will mark buffer as finished
+    }
+
+    /**
+     * @return void
+     */
+    public function testBytesLeft(): void
+    {
+        $bytes = (new \Charcoal\Buffers\Buffer("charcoal-dev"))->read();
+        $bytes->first(4); // skip 4 bytes
+        $this->assertEquals(8, $bytes->bytesLeft());
+        $bytes->next(4); // skip another 4
+        $bytes->readUInt8(); // skip another 1
+        $this->assertEquals(3, $bytes->bytesLeft());
+        $bytes->next(3);
+        $this->assertEquals(0, $bytes->bytesLeft());
+    }
+
+    /**
+     * @return void
+     */
+    public function testBytesLeftWithNoUnderflowEx(): void
+    {
+        $bytes = (new \Charcoal\Buffers\Buffer("charcoal-dev"))->read();
+        $bytes->throwUnderflowEx = false;
+
+        $bytes->first(8); // skip 8 bytes
+        $this->assertEquals(4, $bytes->bytesLeft());
+        $bytes->readUInt16LE(); // skip 2 bytes
+        $this->assertEquals(2, $bytes->bytesLeft());
+        $bytes->next(5);
+        $this->assertEquals(0, $bytes->bytesLeft());
     }
 }
