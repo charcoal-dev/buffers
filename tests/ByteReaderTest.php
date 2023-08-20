@@ -109,4 +109,16 @@ class ByteReaderTest extends \PHPUnit\Framework\TestCase
         $bytes->next(5);
         $this->assertEquals(0, $bytes->bytesLeft());
     }
+
+    /**
+     * @return void
+     */
+    public function testBytesLeft2(): void
+    {
+        $bytes = (new \Charcoal\Buffers\Buffer("charcoal"))->read();
+        $bytes->first(2); // 2
+        $bytes->readUInt16LE(); // +2 = 4
+        $this->assertEquals("coal", $bytes->next($bytes->bytesLeft()));
+        $this->assertTrue($bytes->isEnd());
+    }
 }
