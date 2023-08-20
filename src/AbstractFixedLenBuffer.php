@@ -49,10 +49,15 @@ abstract class AbstractFixedLenBuffer extends AbstractByteArray
 
     /**
      * @return static
-     * @throws \Exception
      */
     public static function fromRandomBytes(): static
     {
-        return new static(random_bytes(static::SIZE));
+        try {
+            return new static(random_bytes(static::SIZE));
+        } catch (\Exception) {
+            throw new \RuntimeException(
+                sprintf('Failed to source %d bytes from cryptographically-secure PRNG method', static::SIZE)
+            );
+        }
     }
 }
