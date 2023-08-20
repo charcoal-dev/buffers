@@ -24,7 +24,7 @@ use Charcoal\Buffers\AbstractFixedLenBuffer;
  */
 class Bytes20 extends AbstractFixedLenBuffer
 {
-    protected const SIZE = 20; // Fixed frame-size of 20 bytes
+    public const SIZE = 20; // Fixed frame-size of 20 bytes
     protected const PAD_TO_LENGTH = null; // No padding, constructor argument MUST be precisely 20 bytes
 
     use CompareSmallFramesTrait;

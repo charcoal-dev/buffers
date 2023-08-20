@@ -23,6 +23,6 @@ namespace Charcoal\Buffers\Frames;
  */
 class Bytes32P extends Bytes32
 {
-    protected const PAD_TO_LENGTH = STR_PAD_LEFT;
+    public const PAD_TO_LENGTH = STR_PAD_LEFT;
 }
 

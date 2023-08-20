@@ -23,5 +23,5 @@ namespace Charcoal\Buffers\Frames;
  */
 class Bytes20P extends Bytes20
 {
-    protected const PAD_TO_LENGTH = STR_PAD_LEFT;
+    public const PAD_TO_LENGTH = STR_PAD_LEFT;
 }
