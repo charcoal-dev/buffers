@@ -69,9 +69,9 @@ class FramesTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(16, $b16->len());
         $b20 = \Charcoal\Buffers\Frames\Bytes20::fromRandomBytes();
         $this->assertEquals(20, $b20->len());
-        $b20 = \Charcoal\Buffers\Frames\Bytes32::fromRandomBytes();
-        $this->assertEquals(32, $b20->len());
-        $b20 = \Charcoal\Buffers\Frames\Bytes32P::fromRandomBytes();
-        $this->assertEquals(32, $b20->len());
+        $b32 = \Charcoal\Buffers\Frames\Bytes32::fromRandomBytes();
+        $this->assertEquals(32, $b32->len());
+        $b32p = \Charcoal\Buffers\Frames\Bytes32P::fromRandomBytes();
+        $this->assertEquals(32, $b32p->len());
     }
 }
