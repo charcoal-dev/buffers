@@ -306,7 +306,7 @@ abstract class AbstractByteArray implements BuffersBridgeInterface, \Stringable
      */
     public function equals(AbstractByteArray|string $cmp): bool
     {
-        if ($cmp instanceof static) {
+        if ($cmp instanceof AbstractByteArray) {
             $cmp = $cmp->raw();
         }
 
