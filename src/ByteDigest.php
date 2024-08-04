@@ -17,6 +17,7 @@ namespace Charcoal\Buffers;
 use Charcoal\Buffers\Frames\Bytes16;
 use Charcoal\Buffers\Frames\Bytes20;
 use Charcoal\Buffers\Frames\Bytes32;
+use Charcoal\Buffers\Frames\Bytes64;
 
 /**
  * Class ByteDigest
@@ -131,11 +132,11 @@ class ByteDigest
     }
 
     /**
-     * @return string|\Charcoal\Buffers\Buffer
+     * @return \Charcoal\Buffers\Frames\Bytes64
      */
-    public function sha512(): string|Buffer
+    public function sha512(): Bytes64
     {
-        return $this->hash("sha512");
+        return new Bytes64($this->hash("sha512", returnString: true));
     }
 
     /**
