@@ -15,9 +15,9 @@ namespace Charcoal\Buffers;
 abstract class AbstractFixedLenBuffer extends AbstractByteArray
 {
     /** @var null|int Fixed size of buffer in bytes */
-    public const SIZE = null;
+    public const ?int SIZE = null;
     /** @var null|int Pads data if smaller than expected len; set with either STR_PAD_* const */
-    protected const PAD_TO_LENGTH = null;
+    protected const ?int PAD_TO_LENGTH = null;
 
     /**
      * @param string $bytes

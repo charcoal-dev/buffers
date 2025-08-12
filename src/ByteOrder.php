@@ -16,10 +16,8 @@ use Charcoal\Adapters\GMP\BigInteger;
  */
 class ByteOrder
 {
-    /** @var int */
-    public const LITTLE_ENDIAN = 0x01;
-    /** @var int */
-    public const BIG_ENDIAN = 0x02;
+    public const int LITTLE_ENDIAN = 0x01;
+    public const int BIG_ENDIAN = 0x02;
 
     /** @var bool|null */
     protected static ?bool $machineIsLittleEndian = null;
@@ -71,7 +69,7 @@ class ByteOrder
 
 
     /**
-     * Checks if provided integer of upto 32-bits can be packed into given N byteLen.
+     * Checks if provided integer of up to 32-bits can be packed into given N byteLen.
      * @param int $n
      * @param int $byteLen
      * @return void

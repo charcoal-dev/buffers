@@ -78,7 +78,7 @@ class ByteReader
     }
 
     /**
-     * Reads last N bytes previously read (does NOT update internal pointer)
+     * Reads last N bytes previously read (does NOT update an internal pointer)
      * @param int $bytes
      * @return string
      */
@@ -94,7 +94,7 @@ class ByteReader
     }
 
     /**
-     * Reads next N bytes but does NOT update internal pointer
+     * Reads next N bytes but does NOT update an internal pointer
      * @param int $bytes
      * @return string
      */

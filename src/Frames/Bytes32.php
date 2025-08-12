@@ -18,8 +18,8 @@ use Charcoal\Buffers\AbstractFixedLenBuffer;
  */
 class Bytes32 extends AbstractFixedLenBuffer
 {
-    public const SIZE = 32; // Fixed frame-size of 32 bytes
-    protected const PAD_TO_LENGTH = null; // No padding, constructor argument MUST be precisely 32 bytes
+    public const int SIZE = 32; // Fixed frame-size of 32 bytes
+    protected const ?int PAD_TO_LENGTH = null; // No padding, constructor argument MUST be precisely 32 bytes
 
     use CompareSmallFramesTrait;
 }

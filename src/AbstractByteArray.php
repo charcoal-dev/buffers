@@ -8,7 +8,8 @@ declare(strict_types=1);
 
 namespace Charcoal\Buffers;
 
-use Charcoal\Adapters\GMP\BuffersBridgeInterface;
+
+use Charcoal\Adapters\GMP\Contracts\BuffersBridgeInterface;
 
 /**
  * Class AbstractByteArray

@@ -14,10 +14,6 @@ use Charcoal\Buffers\AbstractByteArray;
  */
 trait CompareSmallFramesTrait
 {
-    /**
-     * @param \Charcoal\Buffers\AbstractByteArray ...$buffers
-     * @return bool
-     */
     public function inArray(AbstractByteArray ...$buffers): bool
     {
         foreach ($buffers as $buffer) {
