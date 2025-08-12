@@ -6,6 +6,8 @@
 
 declare(strict_types=1);
 
+namespace Charcoal\Buffers\Tests;
+
 use Charcoal\Buffers\Buffer;
 
 /**

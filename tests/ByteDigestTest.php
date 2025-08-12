@@ -6,6 +6,13 @@
 
 declare(strict_types=1);
 
+namespace Charcoal\Buffers\Tests;
+
+use Charcoal\Buffers\Buffer;
+use Charcoal\Buffers\Frames\Bytes16;
+use Charcoal\Buffers\Frames\Bytes20;
+use Charcoal\Buffers\Frames\Bytes32;
+
 /**
  * Class ByteDigestTest
  */
@@ -17,7 +24,7 @@ class ByteDigestTest extends \PHPUnit\Framework\TestCase
      */
     public function testHashes(): void
     {
-        $buffer = new \Charcoal\Buffers\Buffer("charcoal.dev");
+        $buffer = new Buffer("charcoal.dev");
 
         $b1md5 = hash("md5", "charcoal.dev", true);
         $b1sha1 = hash("sha1", "charcoal.dev", false);
@@ -34,7 +41,7 @@ class ByteDigestTest extends \PHPUnit\Framework\TestCase
      */
     public function testResultAsString(): void
     {
-        $digest = (new Charcoal\Buffers\Buffer("charcoal.dev"))->hash();
+        $digest = (new Buffer("charcoal.dev"))->hash();
         $digest->toString(); // All result should be string
 
         $this->assertIsString($digest->hash("sha1"));
@@ -47,7 +54,7 @@ class ByteDigestTest extends \PHPUnit\Framework\TestCase
      */
     public function testResultAsString2(): void
     {
-        $digest = (new Charcoal\Buffers\Buffer("charcoal.dev"))->hash(); // All result should be objects
+        $digest = (new Buffer("charcoal.dev"))->hash(); // All result should be objects
 
         $this->assertIsNotString($digest->hash("sha1"));
         $this->assertIsString($digest->hash("sha1", returnString: true)); // Passing returnString arg overrides toString method
@@ -63,14 +70,14 @@ class ByteDigestTest extends \PHPUnit\Framework\TestCase
      */
     public function testReturnObjects(): void
     {
-        $digest = (new Charcoal\Buffers\Buffer("charcoal.dev"))->hash();
-        $this->assertInstanceOf(\Charcoal\Buffers\Buffer::class, $digest->hash("sha1"));
-        $this->assertInstanceOf(\Charcoal\Buffers\Frames\Bytes20::class, $digest->sha1());
-        $this->assertInstanceOf(\Charcoal\Buffers\Frames\Bytes32::class, $digest->sha256());
-        $this->assertInstanceOf(\Charcoal\Buffers\Frames\Bytes20::class, $digest->ripeMd160());
-        $this->assertInstanceOf(\Charcoal\Buffers\Frames\Bytes16::class, $digest->md5());
+        $digest = (new Buffer("charcoal.dev"))->hash();
+        $this->assertInstanceOf(Buffer::class, $digest->hash("sha1"));
+        $this->assertInstanceOf(Bytes20::class, $digest->sha1());
+        $this->assertInstanceOf(Bytes32::class, $digest->sha256());
+        $this->assertInstanceOf(Bytes20::class, $digest->ripeMd160());
+        $this->assertInstanceOf(Bytes16::class, $digest->md5());
 
-        $this->assertInstanceOf(\Charcoal\Buffers\Buffer::class, $digest->hmac("sha256", new \Charcoal\Buffers\Buffer('some-key')));
-        $this->assertInstanceOf(\Charcoal\Buffers\Buffer::class, $digest->pbkdf2("sha256", "random-salt", 100));
+        $this->assertInstanceOf(Buffer::class, $digest->hmac("sha256", new Buffer('some-key')));
+        $this->assertInstanceOf(Buffer::class, $digest->pbkdf2("sha256", "random-salt", 100));
     }
 }

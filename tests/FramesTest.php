@@ -6,6 +6,14 @@
 
 declare(strict_types=1);
 
+namespace Charcoal\Buffers\Tests;
+
+use Charcoal\Buffers\Frames\Bytes16;
+use Charcoal\Buffers\Frames\Bytes20;
+use Charcoal\Buffers\Frames\Bytes20P;
+use Charcoal\Buffers\Frames\Bytes32;
+use Charcoal\Buffers\Frames\Bytes32P;
+
 /**
  * Class FramesTest
  */
@@ -18,7 +26,7 @@ class FramesTest extends \PHPUnit\Framework\TestCase
     public function testFrameFixLength(): void
     {
         $hash = hash("sha256", "furqansiddiqui", true);
-        $frame = new \Charcoal\Buffers\Frames\Bytes32($hash);
+        $frame = new Bytes32($hash);
         $this->assertEquals(32, $frame->len());
     }
 
@@ -28,7 +36,7 @@ class FramesTest extends \PHPUnit\Framework\TestCase
      */
     public function testFramePaddedLength(): void
     {
-        $frame = new \Charcoal\Buffers\Frames\Bytes20P("furqansiddiqui");
+        $frame = new Bytes20P("furqansiddiqui");
         $this->assertEquals(20, $frame->len());
         $this->assertEquals("\0\0\0\0\0\0furqansiddiqui", $frame->raw());
     }
@@ -40,7 +48,7 @@ class FramesTest extends \PHPUnit\Framework\TestCase
     public function testFrameOverflow(): void
     {
         $this->expectException('LengthException');
-        new \Charcoal\Buffers\Frames\Bytes20(hash("sha256", "furqansiddiqui", true));
+        new Bytes20(hash("sha256", "furqansiddiqui", true));
     }
 
     /**
@@ -50,7 +58,7 @@ class FramesTest extends \PHPUnit\Framework\TestCase
     public function testPaddedFrameOverflow(): void
     {
         $this->expectException('LengthException');
-        new \Charcoal\Buffers\Frames\Bytes20P(hash("sha256", "furqansiddiqui", true));
+        new Bytes20P(hash("sha256", "furqansiddiqui", true));
     }
 
     /**
@@ -59,13 +67,13 @@ class FramesTest extends \PHPUnit\Framework\TestCase
      */
     public function testFromRandom(): void
     {
-        $b16 = \Charcoal\Buffers\Frames\Bytes16::fromRandomBytes();
+        $b16 = Bytes16::fromRandomBytes();
         $this->assertEquals(16, $b16->len());
-        $b20 = \Charcoal\Buffers\Frames\Bytes20::fromRandomBytes();
+        $b20 = Bytes20::fromRandomBytes();
         $this->assertEquals(20, $b20->len());
-        $b32 = \Charcoal\Buffers\Frames\Bytes32::fromRandomBytes();
+        $b32 = Bytes32::fromRandomBytes();
         $this->assertEquals(32, $b32->len());
-        $b32p = \Charcoal\Buffers\Frames\Bytes32P::fromRandomBytes();
+        $b32p = Bytes32P::fromRandomBytes();
         $this->assertEquals(32, $b32p->len());
     }
 }

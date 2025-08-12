@@ -6,6 +6,11 @@
 
 declare(strict_types=1);
 
+namespace Charcoal\Buffers\Tests;
+
+use Charcoal\Buffers\Buffer;
+use Charcoal\Buffers\ByteOrder\LittleEndian;
+
 /**
  * Class ByteReaderTests
  */
@@ -16,8 +21,8 @@ class ByteReaderTest extends \PHPUnit\Framework\TestCase
      */
     public function testByteReader(): void
     {
-        $buffer = new \Charcoal\Buffers\Buffer("\0furqan\1\2" . chr(0xfd) . "\3" .
-            \Charcoal\Buffers\ByteOrder\LittleEndian::PackUInt16(0xfffe) . "\t\r\nsiddiqui"
+        $buffer = new Buffer("\0furqan\1\2" . chr(0xfd) . "\3" .
+            LittleEndian::PackUInt16(0xfffe) . "\t\r\nsiddiqui"
         );
 
         $bytes = $buffer->read();
@@ -48,7 +53,7 @@ class ByteReaderTest extends \PHPUnit\Framework\TestCase
      */
     public function testUnderflowException(): void
     {
-        $bytes = (new \Charcoal\Buffers\Buffer("charcoal.dev"))->read();
+        $bytes = (new Buffer("charcoal.dev"))->read();
         $this->assertEquals("charcoal", $bytes->next(8));
         $this->assertEquals(".", $bytes->next(1));
         $this->expectException('UnderflowException');
@@ -63,7 +68,7 @@ class ByteReaderTest extends \PHPUnit\Framework\TestCase
      */
     public function testIgnoreUnderflowException(): void
     {
-        $bytes = (new \Charcoal\Buffers\Buffer("charcoal.dev"))->read();
+        $bytes = (new Buffer("charcoal.dev"))->read();
         $bytes->throwUnderflowEx = false; // Disable UnderflowException
 
         $this->assertEquals("charcoal", $bytes->next(8));
@@ -78,7 +83,7 @@ class ByteReaderTest extends \PHPUnit\Framework\TestCase
      */
     public function testBytesLeft(): void
     {
-        $bytes = (new \Charcoal\Buffers\Buffer("charcoal-dev"))->read();
+        $bytes = (new Buffer("charcoal-dev"))->read();
         $bytes->first(4); // skip 4 bytes
         $this->assertEquals(8, $bytes->bytesLeft());
         $bytes->next(4); // skip another 4
@@ -93,7 +98,7 @@ class ByteReaderTest extends \PHPUnit\Framework\TestCase
      */
     public function testBytesLeftWithNoUnderflowEx(): void
     {
-        $bytes = (new \Charcoal\Buffers\Buffer("charcoal-dev"))->read();
+        $bytes = (new Buffer("charcoal-dev"))->read();
         $bytes->throwUnderflowEx = false;
 
         $bytes->first(8); // skip 8 bytes
@@ -109,7 +114,7 @@ class ByteReaderTest extends \PHPUnit\Framework\TestCase
      */
     public function testBytesLeft2(): void
     {
-        $bytes = (new \Charcoal\Buffers\Buffer("charcoal"))->read();
+        $bytes = (new Buffer("charcoal"))->read();
         $bytes->first(2); // 2
         $bytes->readUInt16LE(); // +2 = 4
         $this->assertEquals("coal", $bytes->next($bytes->bytesLeft()));

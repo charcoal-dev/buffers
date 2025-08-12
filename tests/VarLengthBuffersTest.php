@@ -6,6 +6,10 @@
 
 declare(strict_types=1);
 
+namespace Charcoal\Buffers\Tests;
+
+use Charcoal\Buffers\Buffer;
+
 /**
  * Class VarLengthBuffersTest
  */
@@ -16,7 +20,7 @@ class VarLengthBuffersTest extends \PHPUnit\Framework\TestCase
      */
     public function testNewBufferIsWritable(): void
     {
-        $this->assertTrue((new \Charcoal\Buffers\Buffer(""))->isWritable());
+        $this->assertTrue((new Buffer(""))->isWritable());
     }
 
     /**
@@ -24,7 +28,7 @@ class VarLengthBuffersTest extends \PHPUnit\Framework\TestCase
      */
     public function testReadOnly(): void
     {
-        $buffer = new \Charcoal\Buffers\Buffer("charcoal");
+        $buffer = new Buffer("charcoal");
         $buffer->readOnly();
 
         $this->expectException('BadMethodCallException');
@@ -36,7 +40,7 @@ class VarLengthBuffersTest extends \PHPUnit\Framework\TestCase
      */
     public function testWritable(): void
     {
-        $buffer = new \Charcoal\Buffers\Buffer("charcoal");
+        $buffer = new Buffer("charcoal");
         $buffer->writable();
         $buffer->append(".dev");
         $this->assertEquals("charcoal.dev", $buffer->raw());
@@ -47,8 +51,8 @@ class VarLengthBuffersTest extends \PHPUnit\Framework\TestCase
      */
     public function testAppendPrepend(): void
     {
-        $buffer = new \Charcoal\Buffers\Buffer("coal");
-        $buffer->prepend(\Charcoal\Buffers\Buffer::fromByteArray([0x63, 0x68, 0x61, 0x72]));
+        $buffer = new Buffer("coal");
+        $buffer->prepend(Buffer::fromByteArray([0x63, 0x68, 0x61, 0x72]));
         $buffer->append(".dev");
         $this->assertEquals("charcoal.dev", $buffer->raw());
     }
@@ -58,7 +62,7 @@ class VarLengthBuffersTest extends \PHPUnit\Framework\TestCase
      */
     public function testFlush(): void
     {
-        $buffer = new \Charcoal\Buffers\Buffer("abcd");
+        $buffer = new Buffer("abcd");
         $buffer->flush(); // Flush
         $this->assertEquals(0, $buffer->len());
     }
@@ -68,7 +72,7 @@ class VarLengthBuffersTest extends \PHPUnit\Framework\TestCase
      */
     public function testFlushInReadOnlyMode(): void
     {
-        $buffer = new \Charcoal\Buffers\Buffer("abcd");
+        $buffer = new Buffer("abcd");
         $buffer->readOnly();
         $this->expectException('BadMethodCallException');
         $buffer->flush(); // Flush
