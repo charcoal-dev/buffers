@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace Charcoal\Buffers;
 
-
 use Charcoal\Adapters\GMP\Contracts\BuffersBridgeInterface;
 
 /**
@@ -255,7 +254,7 @@ abstract class AbstractByteArray implements BuffersBridgeInterface, \Stringable
     /**
      * Pops out given number of bytes from buffer.
      * - If positive number of bytes given in argument, it gets N number of bytes from start of buffer.
-     * - If negative number of bytes given in argument, it gets N number of bytes from end of buffer.
+     * - If negative number of bytes given in argument, it gets N number of bytes from the end of buffer.
      * - If second argument "changeBuffer" is set to TRUE, buffer state will be updated internally
      * otherwise no changes will be made to buffer.
      * @param int $bytes
