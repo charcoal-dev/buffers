@@ -1,5 +1,7 @@
 # Charcoal Buffers
 
+[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 Buffers is a library designed for the intricate handling of byte arrays. Within its suite of tools, you'll find
 capabilities that not only simplify the generation of cryptographic hashes and seamless byte array reading but also
 provide robust solutions for fixed-sized buffer frames and variable length buffers. Furthermore, understanding the
@@ -11,4 +13,4 @@ in the byte array manipulation arena.
 For detailed information, guidance, and setup instructions regarding this library, please refer to our official
 documentation website:
 
-[https://charcoal.dev/docs/buffers](https://charcoal.dev/docs/buffers)
+[https://charcoal.dev/lib/buffers](https://charcoal.dev/lib/buffers)
