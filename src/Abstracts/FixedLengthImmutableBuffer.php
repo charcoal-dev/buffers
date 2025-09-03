@@ -35,7 +35,7 @@ readonly class FixedLengthImmutableBuffer implements
     /**
      * Returns a new instance with the seed padded to the fixed length.
      */
-    public static function getPadded(string $seed): static
+    public static function setPadded(string $seed): static
     {
         return new static(str_pad($seed, static::FixedLengthBytes, "\0", STR_PAD_LEFT));
     }
@@ -43,7 +43,7 @@ readonly class FixedLengthImmutableBuffer implements
     /**
      * Constructor enforces fixed length.
      */
-    private function __construct(private string $bytes)
+    final public function __construct(private string $bytes)
     {
         if (static::FixedLengthBytes <= 0) {
             throw new \InvalidArgumentException(static::class . ": Fixed length must be greater than 0");
