@@ -41,6 +41,30 @@ final class Buffer implements
     }
 
     /**
+     * @return array
+     */
+    public function __serialize(): array
+    {
+        return [
+            "bytes" => $this->bytes,
+            "length" => null,
+            "locked" => $this->locked,
+            "maxSize" => $this->maxSize,
+        ];
+    }
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->setBuffer($data["bytes"]);
+        $this->locked = $data["locked"];
+        $this->maxSize = $data["maxSize"];
+    }
+
+    /**
      * Sets the buffer data.
      * Enforces maximum size constraints and lock status.
      */

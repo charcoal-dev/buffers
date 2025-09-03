@@ -36,6 +36,27 @@ final readonly class BufferImmutable implements
     }
 
     /**
+     * @return array
+     */
+    public function __serialize(): array
+    {
+        return [
+            "bytes" => $this->bytes,
+            "length" => $this->length,
+        ];
+    }
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->bytes = $data["bytes"];
+        $this->length = $data["length"];
+    }
+
+    /**
      * Returns a new instance with data appended.
      * @param ReadableBufferInterface|string $data
      * @return BufferImmutable
