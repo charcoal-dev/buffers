@@ -122,6 +122,10 @@ final class Buffer implements
      */
     public function flush(): void
     {
+        if ($this->locked) {
+            throw new \DomainException("Buffer is locked and cannot be modified");
+        }
+
         $this->setBuffer("");
     }
 
