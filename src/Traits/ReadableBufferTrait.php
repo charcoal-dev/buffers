@@ -35,14 +35,13 @@ trait ReadableBufferTrait
     }
 
     /**
-     * @param int $size
      * @param int $offset
      * @param int|null $length
      * @return string
      */
-    protected function substr(int $size, int $offset, int $length = null): string
+    public function subString(int $offset, int $length = null): string
     {
-        $off = max(-$size, min($offset, $size));
+        $off = max(-$this->length, min($offset, $this->length));
         if ($length === null) {
             return substr($this->bytes, $off) ?: "";
         }
@@ -51,7 +50,7 @@ trait ReadableBufferTrait
             return substr($this->bytes, $off, $length) ?: "";
         }
 
-        return substr($this->bytes, $off, -min($size, max(0, -$length))) ?: "";
+        return substr($this->bytes, $off, -min($this->length, max(0, -$length))) ?: "";
     }
 
     /**

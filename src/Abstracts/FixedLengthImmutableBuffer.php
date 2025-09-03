@@ -74,14 +74,6 @@ readonly class FixedLengthImmutableBuffer implements
     }
 
     /**
-     * Returns resulting substring at offset and length.
-     */
-    public function subString(int $offset, int $length = null): string
-    {
-        return $this->substr($this->length, $offset, $length);
-    }
-
-    /**
      * Returns the buffer's content, trimmed if requested.
      */
     public function getClean(bool $trimLeft = true, bool $trimRight = true): string

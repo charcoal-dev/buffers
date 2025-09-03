@@ -1,4 +1,4 @@
-<?php
+<?php /**  */
 /**
  * Part of the "charcoal-dev/buffers" package.
  * @link https://github.com/charcoal-dev/buffers
@@ -40,7 +40,7 @@ final readonly class BufferImmutable implements
      * @param ReadableBufferInterface|string $data
      * @return BufferImmutable
      */
-    public function withAppended(ReadableBufferInterface|string $data): static
+    public function withAppended(ReadableBufferInterface|string $data): self
     {
         return new BufferImmutable($this->bytes .
             ($data instanceof ReadableBufferInterface ? $data->bytes() : $data));
@@ -51,17 +51,9 @@ final readonly class BufferImmutable implements
      * @param ReadableBufferInterface|string $data
      * @return BufferImmutable
      */
-    public function withPrepended(ReadableBufferInterface|string $data): static
+    public function withPrepended(ReadableBufferInterface|string $data): self
     {
         return new BufferImmutable(($data instanceof ReadableBufferInterface ? $data->bytes() : $data)
             . $this->bytes);
-    }
-
-    /**
-     * Returns resulting substring at offset and length.
-     */
-    public function subString(int $offset, int $length = null): string
-    {
-        return $this->substr($this->length, $offset, $length);
     }
 }
