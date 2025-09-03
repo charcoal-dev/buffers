@@ -8,13 +8,14 @@ declare(strict_types=1);
 
 namespace Charcoal\Buffers;
 
-use Charcoal\Adapters\GMP\Contracts\BuffersBridgeInterface;
+use Charcoal\Buffers\Support\ByteReader;
+use Charcoal\Buffers\Support\Endianness;
 
 /**
  * Class AbstractByteArray
  * @package Charcoal\Buffers
  */
-abstract class AbstractByteArray implements BuffersBridgeInterface, \Stringable
+abstract class AbstractByteArray implements \Stringable
 {
     /** @var string */
     protected string $data = "";
@@ -120,25 +121,6 @@ abstract class AbstractByteArray implements BuffersBridgeInterface, \Stringable
         return base64_encode($this->data);
     }
 
-    /**
-     * @param array $bytes
-     * @return static
-     */
-    public static function fromBinary(array $bytes): static
-    {
-        $bytes = implode(" ", $bytes);
-        if (!preg_match('/^[01]{1,8}(\s[01]{1,8})*$/', $bytes)) {
-            throw new \InvalidArgumentException('Cannot instantiate Buffer; expected Binary');
-        }
-
-        $bytes = explode(" ", $bytes);
-        $bA = [];
-        foreach ($bytes as $byte) {
-            $bA[] = gmp_intval(gmp_init($byte, 2));
-        }
-
-        return static::fromByteArray($bA);
-    }
 
     /**
      * @param bool $padded8bits
@@ -328,7 +310,7 @@ abstract class AbstractByteArray implements BuffersBridgeInterface, \Stringable
      */
     public function switchEndianness(): static
     {
-        return new static(ByteOrder::SwapEndianness($this->raw()));
+        return new static(Endianness::swap($this->raw()));
     }
 
     /**
