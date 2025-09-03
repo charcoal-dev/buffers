@@ -20,7 +20,7 @@ use Charcoal\Contracts\Buffers\ReadableBufferInterface;
  * the buffer in an immutable way while ensuring the buffer's
  * length remains constant.
  */
-readonly class FixedLenImmutableBuffer implements
+readonly class FixedLengthImmutableBuffer implements
     ImmutableBufferInterface,
     FixedLengthBufferInterface,
     ReadableBufferInterface
@@ -30,8 +30,16 @@ readonly class FixedLenImmutableBuffer implements
 
     private int $length;
 
-    protected function __construct(private string $bytes)
+    /**
+     * Constructor enforces fixed length.
+     */
+    protected function __construct(string $type, int $size, private string $bytes)
     {
+        $this->length = strlen($bytes);
+        if ($this->length !== $size) {
+            throw new \LengthException(
+                sprintf("%s: seed must be exactly %d bytes, got %d", $type, $size, strlen($bytes)));
+        }
     }
 
     /**
