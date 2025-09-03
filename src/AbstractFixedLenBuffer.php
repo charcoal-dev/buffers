@@ -11,6 +11,7 @@ namespace Charcoal\Buffers;
 /**
  * Class AbstractFixedLenBuffer
  * @package Charcoal\Buffers
+ * @deprecated
  */
 abstract class AbstractFixedLenBuffer extends AbstractByteArray
 {
