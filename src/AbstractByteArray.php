@@ -14,6 +14,7 @@ use Charcoal\Buffers\Support\Endianness;
 /**
  * Class AbstractByteArray
  * @package Charcoal\Buffers
+ * @deprecated
  */
 abstract class AbstractByteArray implements \Stringable
 {
@@ -26,6 +27,7 @@ abstract class AbstractByteArray implements \Stringable
 
     /**
      * @param string|null $data
+     * @deprecated
      */
     public function __construct(?string $data = null)
     {
