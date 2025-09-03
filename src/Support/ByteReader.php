@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Charcoal\Buffers\Support;
 
+use Charcoal\Contracts\Buffers\ByteArrayReaderInterface;
 use Charcoal\Contracts\Buffers\ReadableBufferInterface;
 
 /**
@@ -15,7 +16,7 @@ use Charcoal\Contracts\Buffers\ReadableBufferInterface;
  * read, and manipulate byte positions within a given buffer while supporting both
  * little-endian and big-endian formats for numerical representation.
  */
-class ByteReader
+class ByteReader implements ByteArrayReaderInterface
 {
     private readonly string $buffer;
     public readonly int $size;
