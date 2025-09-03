@@ -14,7 +14,7 @@ namespace Charcoal\Buffers\Support;
  * representation of data, which can be either little-endian (least-significant
  * byte first) or big-endian (most-significant byte first).
  */
-class Endianness
+final class Endianness
 {
     protected static ?bool $machineIsLittleEndian = null;
 
@@ -31,11 +31,11 @@ class Endianness
      */
     public static function isLittleEndian(): bool
     {
-        if (!is_bool(static::$machineIsLittleEndian)) {
-            static::$machineIsLittleEndian = pack("S", 1) === pack("v", 1);
+        if (!is_bool(self::$machineIsLittleEndian)) {
+            self::$machineIsLittleEndian = pack("S", 1) === pack("v", 1);
         }
 
-        return static::$machineIsLittleEndian;
+        return self::$machineIsLittleEndian;
     }
 
     /**
@@ -43,6 +43,6 @@ class Endianness
      */
     public static function isBigEndian(): bool
     {
-        return !static::isLittleEndian();
+        return !self::isLittleEndian();
     }
 }

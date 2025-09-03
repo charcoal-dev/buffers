@@ -14,7 +14,7 @@ use Charcoal\Base\Support\Helpers\ErrorHelper;
  * StreamHelper provides utility methods for reading streams and writing their data
  * to either temporary files or memory with size limits.
  */
-class StreamHelper
+final class StreamHelper
 {
     public static string $tempFilePrefix = "charcoal-";
 
