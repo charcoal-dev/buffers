@@ -20,7 +20,7 @@ use Charcoal\Contracts\Buffers\ReadableBufferInterface;
  * without altering the original instance. It also supports accessing substrings
  * of the buffer's data.
  */
-readonly class BufferImmutable implements
+final readonly class BufferImmutable implements
     ImmutableBufferInterface,
     ReadableBufferInterface,
     BufferSpinOffInterface
