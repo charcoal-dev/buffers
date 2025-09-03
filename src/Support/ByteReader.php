@@ -119,7 +119,7 @@ class ByteReader implements ByteArrayReaderInterface
     }
 
     /**
-     * Reads next 2 bytes as an unsigned integer (little-ending byte order),
+     * Reads next 2 bytes as an unsigned integer (little-endian byte order),
      * Updates the pointer (+2)
      */
     public function readUInt16LE(): int
@@ -128,7 +128,7 @@ class ByteReader implements ByteArrayReaderInterface
     }
 
     /**
-     * Reads next 2 bytes as an unsigned integer (big-ending byte order),
+     * Reads next 2 bytes as an unsigned integer (big-endian byte order),
      * Updates the pointer (+2)
      */
     public function readUInt16BE(): int
@@ -137,7 +137,7 @@ class ByteReader implements ByteArrayReaderInterface
     }
 
     /**
-     * Reads next 4 bytes as an unsigned integer (little-ending byte order),
+     * Reads next 4 bytes as an unsigned integer (little-endian byte order),
      * Updates the pointer (+4)
      */
     public function readUInt32LE(): int
@@ -146,7 +146,7 @@ class ByteReader implements ByteArrayReaderInterface
     }
 
     /**
-     * Reads next 4 bytes as an unsigned integer (big-ending byte order),
+     * Reads next 4 bytes as an unsigned integer (big-endian byte order),
      * Updates the pointer (+4)
      */
     public function readUInt32BE(): int
