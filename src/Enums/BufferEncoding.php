@@ -47,7 +47,7 @@ enum BufferEncoding implements EncodingSchemeInterface
         return match ($this) {
             self::Base16 => self::decodeBase16($encoded),
             self::Base64,
-            self::Base64Url => self::encodeBase64($encoded, $this === self::Base64Url),
+            self::Base64Url => self::decodeBase64($encoded),
         };
     }
 
@@ -101,11 +101,9 @@ enum BufferEncoding implements EncodingSchemeInterface
      */
     public static function decodeBase64(string $encoded): string
     {
-        if (!str_ends_with($encoded, "=") || (strpos($encoded, "-") > 0 || strpos($encoded, "_") > 0)) {
-            $encoded = strtr($encoded, "-_", "+/");
-            $encoded .= str_repeat("=", (4 - strlen($encoded) % 4) % 4);
-        }
-
-        return base64_decode($encoded, true) ?: "";
+        $encoded = strtr($encoded, "-_", "+/");
+        $encoded .= str_repeat("=", (4 - strlen($encoded) % 4) % 4);
+        return base64_decode($encoded, true) ?:
+            throw new \InvalidArgumentException("Invalid base64 string");
     }
 }
