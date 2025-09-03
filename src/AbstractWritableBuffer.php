@@ -15,6 +15,7 @@ use Charcoal\Buffers\ByteOrder\LittleEndian;
 /**
  * Class AbstractWritableBuffer
  * @package Charcoal\Buffers
+ * @deprecated
  */
 abstract class AbstractWritableBuffer extends AbstractByteArray
 {
