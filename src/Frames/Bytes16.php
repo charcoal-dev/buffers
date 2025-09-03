@@ -15,6 +15,7 @@ use Charcoal\Buffers\AbstractFixedLenBuffer;
  * - Use this frame for buffers of precisely 16 bytes.
  * - If value is smaller than 16 bytes, LengthException will be thrown.
  * @package Charcoal\Buffers\Frames
+ * @deprecated
  */
 class Bytes16 extends AbstractFixedLenBuffer
 {

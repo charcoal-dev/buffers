@@ -14,6 +14,7 @@ namespace Charcoal\Buffers\Frames;
  *  - If value is smaller than 20 bytes, it will be padded with NULL bytes to its left.
  *  - This class extends Bytes20 so using this in place of Bytes20 type hinting is compatible.
  * @package Charcoal\Buffers\Frames
+ * @deprecated
  */
 class Bytes20P extends Bytes20
 {

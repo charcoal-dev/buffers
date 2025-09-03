@@ -14,6 +14,7 @@ namespace Charcoal\Buffers\Frames;
  *  - If value is smaller than 32 bytes, it will be padded with NULL bytes to its left.
  *  - This class extends Bytes32 so using this in place of Bytes32 type hinting is compatible.
  * @package Charcoal\Buffers\Frames
+ * @deprecated
  */
 class Bytes32P extends Bytes32
 {

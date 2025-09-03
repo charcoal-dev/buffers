@@ -11,6 +11,7 @@ use Charcoal\Buffers\AbstractByteArray;
 /**
  * Trait CompareSmallFramesTrait
  * @package Charcoal\Buffers\Frames
+ * @deprecated
  */
 trait CompareSmallFramesTrait
 {
