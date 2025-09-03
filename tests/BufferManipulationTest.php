@@ -9,22 +9,14 @@ declare(strict_types=1);
 namespace Charcoal\Buffers\Tests;
 
 use Charcoal\Buffers\Buffer;
+use Charcoal\Buffers\BufferImmutable;
+use Charcoal\Buffers\Enums\BufferEncoding;
 
 /**
  * Class BufferManipulationTest
  */
 class BufferManipulationTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Test when instance of AbstractByteArray (any buffer) is treated as string
-     * @return void
-     */
-    public function testAsString(): void
-    {
-        $buffer = Buffer::fromBase16("63686172636f616c");
-        $this->assertEquals(8, strlen((string)$buffer));
-        $this->assertEquals("charcoal", strval($buffer));
-    }
 
     /**
      * @return void
@@ -33,8 +25,8 @@ class BufferManipulationTest extends \PHPUnit\Framework\TestCase
     {
         $buffer = new Buffer(); // Blank buffer
         $buffer->append(Buffer::fromBase16("63686172"));
-        $buffer->append(Buffer::fromByteArray([0x63, 0x6f, 0x61, 0x6c]));
-        $this->assertEquals("charcoal", $buffer->raw());
+        $buffer->append(new BufferImmutable("\x63\x6f\x61\x6c"));
+        $this->assertEquals("charcoal", $buffer->bytes());
     }
 
     /**
@@ -43,14 +35,8 @@ class BufferManipulationTest extends \PHPUnit\Framework\TestCase
     public function testPopMethod(): void
     {
         $buffer = new Buffer("charcoal");
-        $this->assertEquals("ch", $buffer->pop(2, changeBuffer: false)); // Pop 2 bytes, don't change buffer
-        $this->assertEquals("charcoal", $buffer->raw()); // Buffer was not altered
-        $this->assertEquals("char", $buffer->pop(4, changeBuffer: true)); // Pop first 4 bytes, CHANGE the buffer internally
-        $this->assertEquals("coal", $buffer->raw()); // Buffer was updated, it is now just "coal"
-        $this->assertEquals("al", $buffer->pop(-2, changeBuffer: false)); // Get last 2 bytes, don't change the buffer
-        $this->assertEquals("coal", $buffer->raw()); // Buffer still intact
-        $this->assertEquals("oal", $buffer->pop(-3, changeBuffer: true)); // Get last 3 bytes, CHANGE the buffer
-        $this->assertEquals("c", $buffer->raw()); // Buffer was changed, now its only "c"
+        $this->assertEquals("ch", $buffer->subString(0, 2)); // Pop 2 bytes, don't change buffer
+        $this->assertEquals("charcoal", $buffer->bytes()); // Buffer was not altered
     }
 
     /**
@@ -60,13 +46,13 @@ class BufferManipulationTest extends \PHPUnit\Framework\TestCase
     {
         $buffer1 = new Buffer("charcoal");
 
-        $this->assertEquals("charcoal", $buffer1->copy()->raw(), "Simple Copy");
-        $this->assertEquals("char", $buffer1->copy(0, 4)->raw(), "Copy initial 4 bytes as new Buffer");
-        $this->assertEquals("charcoal", $buffer1->raw(), "Original buffer is intact");
-        $this->assertEquals("harc", $buffer1->copy(1, 4)->raw(), "Get 4 bytes starting after first byte");
-        $this->assertEquals("coal", $buffer1->copy(-4)->raw(), "Copy last 4 bytes as new Buffer");
-        $this->assertEquals("coa", $buffer1->copy(-4, 3)->raw(), "Copy 3 bytes from set of last 4 bytes");
-        $this->assertEquals("arcoal", $buffer1->copy(2)->raw(), "Copy all bytes as new Buffer except first 2");
+        $this->assertEquals("charcoal", $buffer1->copy()->bytes(), "Simple Copy");
+        $this->assertEquals("char", $buffer1->copy(0, 4)->bytes(), "Copy initial 4 bytes as new Buffer");
+        $this->assertEquals("charcoal", $buffer1->bytes(), "Original buffer is intact");
+        $this->assertEquals("harc", $buffer1->copy(1, 4)->bytes(), "Get 4 bytes starting after first byte");
+        $this->assertEquals("coal", $buffer1->copy(-4)->bytes(), "Copy last 4 bytes as new Buffer");
+        $this->assertEquals("coa", $buffer1->copy(-4, 3)->bytes(), "Copy 3 bytes from set of last 4 bytes");
+        $this->assertEquals("arcoal", $buffer1->copy(2)->bytes(), "Copy all bytes as new Buffer except first 2");
 
         $coal = new Buffer("coal");
         $this->assertTrue($buffer1->copy(-4)->equals($coal));
@@ -79,20 +65,7 @@ class BufferManipulationTest extends \PHPUnit\Framework\TestCase
     public function testSwitchEndiannessMethod(): void
     {
         $buffer = Buffer::fromBase16("a1b2c3");
-        $switched = $buffer->switchEndianness();
-        $this->assertEquals("c3b2a1", $switched->toBase16());
-    }
-
-    /**
-     * @return void
-     */
-    public function testApplyFn(): void
-    {
-        $buffer = new Buffer(" charcoal\t\0");
-        $manipulated = $buffer->applyFn(function (string $bytes) {
-            return strtolower(trim($bytes)) . ".dev";
-        });
-
-        $this->assertEquals("charcoal.dev", $manipulated->raw());
+        $switched = $buffer->reverse();
+        $this->assertEquals("c3b2a1", $switched->encode(BufferEncoding::Base16));
     }
 }

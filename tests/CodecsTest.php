@@ -8,10 +8,10 @@ declare(strict_types=1);
 
 namespace Charcoal\Buffers\Tests;
 
-use Charcoal\Buffers\AbstractByteArray;
 use Charcoal\Buffers\Buffer;
-use Charcoal\Buffers\Frames\Bytes20;
-use Charcoal\Buffers\Frames\Bytes32;
+use Charcoal\Buffers\Enums\BufferEncoding;
+use Charcoal\Buffers\Types\Bytes32;
+use Charcoal\Contracts\Buffers\ByteArrayInterface;
 
 /**
  * Class CodecsTest
@@ -25,19 +25,13 @@ class CodecsTest extends \PHPUnit\Framework\TestCase
     {
         $buffer = new Buffer("charcoal");
         $ser1 = serialize($buffer);
-        $ser2 = serialize($buffer->hash()->sha1());
 
-        /** @var AbstractByteArray $restored1 */
+        /** @var ByteArrayInterface $restored1 */
         $restored1 = unserialize($ser1);
-        /** @var AbstractByteArray $restored2 */
-        $restored2 = unserialize($ser2);
 
         $this->assertInstanceOf(Buffer::class, $restored1);
-        $this->assertEquals(8, $restored1->len());
-        $this->assertEquals("charcoal", $restored1->raw());
-
-        $this->assertInstanceOf(Bytes20::class, $restored2);
-        $this->assertEquals(20, $restored2->len());
+        $this->assertEquals(8, $restored1->length());
+        $this->assertEquals("charcoal", $restored1->bytes());
     }
 
     /**
@@ -52,17 +46,8 @@ class CodecsTest extends \PHPUnit\Framework\TestCase
         $frame2 = Bytes32::fromBase16($hex);
 
         $this->assertTrue($frame1->equals($frame2), "Testing that 0x prefix is discarded");
-        $this->assertEquals($frame1->toBase16(), $hex, "Compare hex strings");
-        $this->assertEquals($frame1->raw(), $raw, "Compare raw strings");
-    }
-
-    /**
-     * @return void
-     */
-    public function testByteArray(): void
-    {
-        $buffer = Buffer::fromBase16("73616d706c65");
-        $this->assertEquals([115, 97, 109, 112, 0x6c, 0x65], $buffer->toByteArray());
+        $this->assertEquals($frame1->encode(BufferEncoding::Base16), $hex, "Compare hex strings");
+        $this->assertEquals($frame1->bytes(), $raw, "Compare raw strings");
     }
 
     /**
@@ -71,12 +56,9 @@ class CodecsTest extends \PHPUnit\Framework\TestCase
     public function testByteArrayWithUTF8(): void
     {
         $bA = [217, 129, 216, 177, 217, 130, 216, 167, 217, 134];
-        $buffer2 = Buffer::fromByteArray($bA);
-        $this->assertNotEquals("فرقا", $buffer2->raw());
-        $this->assertEquals("فرقان", $buffer2->raw());
-
-        $buffer3 = new Buffer("فرقان");
-        $this->assertEquals($bA, $buffer3->toByteArray());
+        $buffer2 = new Buffer(implode("", array_map(fn($i) => chr($i), $bA)));
+        $this->assertNotEquals("فرقا", $buffer2->bytes());
+        $this->assertEquals("فرقان", $buffer2->bytes());
     }
 
     /**
@@ -86,8 +68,8 @@ class CodecsTest extends \PHPUnit\Framework\TestCase
     {
         $string = "YjY0AHRlc3Q=";
         $buffer = Buffer::fromBase64($string);
-        $this->assertNotEquals("b64 test", $buffer->raw());
-        $this->assertEquals("b64\0test", $buffer->raw());
-        $this->assertEquals($string, $buffer->toBase64());
+        $this->assertNotEquals("b64 test", $buffer->bytes());
+        $this->assertEquals("b64\0test", $buffer->bytes());
+        $this->assertEquals($string, $buffer->encode(BufferEncoding::Base64));
     }
 }

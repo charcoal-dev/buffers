@@ -20,7 +20,7 @@ class VarLengthBuffersTest extends \PHPUnit\Framework\TestCase
      */
     public function testNewBufferIsWritable(): void
     {
-        $this->assertTrue((new Buffer(""))->isWritable());
+        $this->assertFalse((new Buffer(""))->isLocked());
     }
 
     /**
@@ -29,9 +29,9 @@ class VarLengthBuffersTest extends \PHPUnit\Framework\TestCase
     public function testReadOnly(): void
     {
         $buffer = new Buffer("charcoal");
-        $buffer->readOnly();
+        $buffer->lock();
 
-        $this->expectException('BadMethodCallException');
+        $this->expectException("DomainException");
         $buffer->append(".dev");
     }
 
@@ -41,9 +41,9 @@ class VarLengthBuffersTest extends \PHPUnit\Framework\TestCase
     public function testWritable(): void
     {
         $buffer = new Buffer("charcoal");
-        $buffer->writable();
+        $buffer->unlock();
         $buffer->append(".dev");
-        $this->assertEquals("charcoal.dev", $buffer->raw());
+        $this->assertEquals("charcoal.dev", $buffer->bytes());
     }
 
     /**
@@ -52,9 +52,9 @@ class VarLengthBuffersTest extends \PHPUnit\Framework\TestCase
     public function testAppendPrepend(): void
     {
         $buffer = new Buffer("coal");
-        $buffer->prepend(Buffer::fromByteArray([0x63, 0x68, 0x61, 0x72]));
+        $buffer->prepend(new Buffer("\x63\x68\x61\x72"));
         $buffer->append(".dev");
-        $this->assertEquals("charcoal.dev", $buffer->raw());
+        $this->assertEquals("charcoal.dev", $buffer->bytes());
     }
 
     /**
@@ -64,7 +64,7 @@ class VarLengthBuffersTest extends \PHPUnit\Framework\TestCase
     {
         $buffer = new Buffer("abcd");
         $buffer->flush(); // Flush
-        $this->assertEquals(0, $buffer->len());
+        $this->assertEquals(0, $buffer->length());
     }
 
     /**
@@ -73,8 +73,8 @@ class VarLengthBuffersTest extends \PHPUnit\Framework\TestCase
     public function testFlushInReadOnlyMode(): void
     {
         $buffer = new Buffer("abcd");
-        $buffer->readOnly();
-        $this->expectException('BadMethodCallException');
+        $buffer->lock();
+        $this->expectException("DomainException");
         $buffer->flush(); // Flush
     }
 }

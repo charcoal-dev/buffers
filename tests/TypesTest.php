@@ -8,16 +8,15 @@ declare(strict_types=1);
 
 namespace Charcoal\Buffers\Tests;
 
-use Charcoal\Buffers\Frames\Bytes16;
-use Charcoal\Buffers\Frames\Bytes20;
-use Charcoal\Buffers\Frames\Bytes20P;
-use Charcoal\Buffers\Frames\Bytes32;
-use Charcoal\Buffers\Frames\Bytes32P;
+use Charcoal\Buffers\Types\Bytes16;
+use Charcoal\Buffers\Types\Bytes20;
+use Charcoal\Buffers\Types\Bytes32;
 
 /**
- * Class FramesTest
+ * Class TypesTest
+ * @package Charcoal\Buffers\Tests
  */
-class FramesTest extends \PHPUnit\Framework\TestCase
+class TypesTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Basic check
@@ -27,7 +26,7 @@ class FramesTest extends \PHPUnit\Framework\TestCase
     {
         $hash = hash("sha256", "furqansiddiqui", true);
         $frame = new Bytes32($hash);
-        $this->assertEquals(32, $frame->len());
+        $this->assertEquals(32, $frame->length());
     }
 
     /**
@@ -36,18 +35,18 @@ class FramesTest extends \PHPUnit\Framework\TestCase
      */
     public function testFramePaddedLength(): void
     {
-        $frame = new Bytes20P("furqansiddiqui");
-        $this->assertEquals(20, $frame->len());
-        $this->assertEquals("\0\0\0\0\0\0furqansiddiqui", $frame->raw());
+        $frame = Bytes20::setPadded("furqansiddiqui");
+        $this->assertEquals(20, $frame->length());
+        $this->assertEquals("\0\0\0\0\0\0furqansiddiqui", $frame->bytes());
     }
 
     /**
-     * Attempt to give 32 bytes value to a 20 byte frame
+     * Attempt to give 32 bytes value to a 20-byte frame
      * @return void
      */
     public function testFrameOverflow(): void
     {
-        $this->expectException('LengthException');
+        $this->expectException("LengthException");
         new Bytes20(hash("sha256", "furqansiddiqui", true));
     }
 
@@ -58,7 +57,7 @@ class FramesTest extends \PHPUnit\Framework\TestCase
     public function testPaddedFrameOverflow(): void
     {
         $this->expectException('LengthException');
-        new Bytes20P(hash("sha256", "furqansiddiqui", true));
+        Bytes20::setPadded(hash("sha256", "furqansiddiqui", true));
     }
 
     /**
@@ -67,13 +66,11 @@ class FramesTest extends \PHPUnit\Framework\TestCase
      */
     public function testFromRandom(): void
     {
-        $b16 = Bytes16::fromRandomBytes();
-        $this->assertEquals(16, $b16->len());
-        $b20 = Bytes20::fromRandomBytes();
-        $this->assertEquals(20, $b20->len());
-        $b32 = Bytes32::fromRandomBytes();
-        $this->assertEquals(32, $b32->len());
-        $b32p = Bytes32P::fromRandomBytes();
-        $this->assertEquals(32, $b32p->len());
+        $b16 = Bytes16::fromPrng();
+        $this->assertEquals(16, $b16->length());
+        $b20 = Bytes20::fromPrng();
+        $this->assertEquals(20, $b20->length());
+        $b32 = Bytes32::fromPrng();
+        $this->assertEquals(32, $b32->length());
     }
 }
