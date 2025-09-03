@@ -58,10 +58,10 @@ readonly class BufferImmutable implements
     }
 
     /**
-     * Returns resulting starting after applying offset and length.
+     * Returns resulting substring at offset and length.
      */
-    public function substr(int $offset, int $length = null): string
+    public function subString(int $offset, int $length = null): string
     {
-        return $this->_substr($this->length, $offset, $length);
+        return $this->substr($this->length, $offset, $length);
     }
 }

@@ -14,8 +14,8 @@
   ],
   "require": {
     "php": "^8.3",
-    "ext-gmp": "*",
-    "charcoal-dev/gmp-adapter": "^0.1.0"
+    "charcoal-dev/contracts": "dev-main#c055992",
+    "charcoal-dev/base": "^0.1.7"
   },
   "autoload": {
     "psr-4": {

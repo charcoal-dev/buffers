@@ -40,7 +40,7 @@ trait ReadableBufferTrait
      * @param int|null $length
      * @return string
      */
-    protected function _substr(int $size, int $offset, int $length = null): string
+    protected function substr(int $size, int $offset, int $length = null): string
     {
         $off = max(-$size, min($offset, $size));
         if ($length === null) {
