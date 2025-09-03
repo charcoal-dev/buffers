@@ -13,6 +13,7 @@ use Charcoal\Buffers\Traits\ReadableBufferTrait;
 use Charcoal\Contracts\Buffers\FixedLengthBufferInterface;
 use Charcoal\Contracts\Buffers\ImmutableBufferInterface;
 use Charcoal\Contracts\Buffers\ReadableBufferInterface;
+use Random\RandomException;
 
 /**
  * Represents an immutable buffer with a fixed length.
@@ -41,6 +42,22 @@ readonly class FixedLengthImmutableBuffer implements
     }
 
     /**
+     * @return static
+     */
+    public static function fromPrng(): static
+    {
+        try {
+            return new static(random_bytes(static::FixedLengthBytes));
+        } catch (RandomException $e) {
+            throw new \RuntimeException(
+                sprintf("Failed to source %d bytes from cryptographically-secure PRNG method",
+                    static::FixedLengthBytes),
+                previous: $e
+            );
+        }
+    }
+
+    /**
      * Constructor enforces fixed length.
      */
     final public function __construct(private string $bytes)
@@ -55,6 +72,26 @@ readonly class FixedLengthImmutableBuffer implements
                 sprintf("%s: seed must be exactly %d bytes, got %d",
                     static::class, static::FixedLengthBytes, strlen($bytes)));
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function __serialize(): array
+    {
+        return [
+            "bytes" => $this->bytes,
+        ];
+    }
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->bytes = $data["bytes"];
+        $this->length = strlen($this->bytes);
     }
 
     /**

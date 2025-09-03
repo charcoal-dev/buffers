@@ -42,7 +42,6 @@ final readonly class BufferImmutable implements
     {
         return [
             "bytes" => $this->bytes,
-            "length" => $this->length,
         ];
     }
 
@@ -53,7 +52,7 @@ final readonly class BufferImmutable implements
     public function __unserialize(array $data): void
     {
         $this->bytes = $data["bytes"];
-        $this->length = $data["length"];
+        $this->length = strlen($this->bytes);
     }
 
     /**
