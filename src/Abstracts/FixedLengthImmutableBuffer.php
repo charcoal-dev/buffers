@@ -10,8 +10,8 @@ namespace Charcoal\Buffers\Abstracts;
 
 use Charcoal\Buffers\Traits\BufferDecodeTrait;
 use Charcoal\Buffers\Traits\ReadableBufferTrait;
-use Charcoal\Contracts\Buffers\FixedLengthBufferInterface;
-use Charcoal\Contracts\Buffers\ImmutableBufferInterface;
+use Charcoal\Contracts\Buffers\Immutable\FixedLengthBufferInterface;
+use Charcoal\Contracts\Buffers\Immutable\ImmutableBufferInterface;
 use Charcoal\Contracts\Buffers\ReadableBufferInterface;
 use Random\RandomException;
 

@@ -10,8 +10,8 @@ namespace Charcoal\Buffers;
 
 use Charcoal\Buffers\Traits\BufferDecodeTrait;
 use Charcoal\Buffers\Traits\ReadableBufferTrait;
-use Charcoal\Contracts\Buffers\BufferSpinOffInterface;
-use Charcoal\Contracts\Buffers\ImmutableBufferInterface;
+use Charcoal\Contracts\Buffers\Immutable\BufferSpinOffInterface;
+use Charcoal\Contracts\Buffers\Immutable\ImmutableBufferInterface;
 use Charcoal\Contracts\Buffers\ReadableBufferInterface;
 
 /**

@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Charcoal\Buffers\Support;
 
-use Charcoal\Contracts\Buffers\ByteArrayReaderInterface;
+use Charcoal\Contracts\Buffers\Support\ByteArrayReaderInterface;
 use Charcoal\Contracts\Buffers\ReadableBufferInterface;
 
 /**
