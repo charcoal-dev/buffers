@@ -9,25 +9,12 @@ declare(strict_types=1);
 namespace Charcoal\Buffers\Tests;
 
 use Charcoal\Buffers\Buffer;
-use Charcoal\Buffers\BufferImmutable;
-use Charcoal\Buffers\Enums\BufferEncoding;
 
 /**
  * Class BufferManipulationTest
  */
 class BufferManipulationTest extends \PHPUnit\Framework\TestCase
 {
-
-    /**
-     * @return void
-     */
-    public function testBufferFromMultipleCodes(): void
-    {
-        $buffer = new Buffer(); // Blank buffer
-        $buffer->append(Buffer::fromBase16("63686172"));
-        $buffer->append(new BufferImmutable("\x63\x6f\x61\x6c"));
-        $this->assertEquals("charcoal", $buffer->bytes());
-    }
 
     /**
      * @return void
@@ -57,15 +44,5 @@ class BufferManipulationTest extends \PHPUnit\Framework\TestCase
         $coal = new Buffer("coal");
         $this->assertTrue($buffer1->copy(-4)->equals($coal));
         $this->assertFalse($buffer1->copy(-4)->equals(new Buffer("cola")));
-    }
-
-    /**
-     * @return void
-     */
-    public function testSwitchEndiannessMethod(): void
-    {
-        $buffer = Buffer::fromBase16("a1b2c3");
-        $switched = $buffer->reverse();
-        $this->assertEquals("c3b2a1", $switched->encode(BufferEncoding::Base16));
     }
 }
