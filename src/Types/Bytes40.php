@@ -11,7 +11,7 @@ namespace Charcoal\Buffers\Types;
 use Charcoal\Buffers\Abstracts\FixedLengthImmutableBuffer;
 
 /**
- * Type for 40-byte (Immutable + Fixed-Length) buffer.
+ * Type for a 40-byte (Immutable and Fixed-Length) buffer.
  */
 final readonly class Bytes40 extends FixedLengthImmutableBuffer
 {
