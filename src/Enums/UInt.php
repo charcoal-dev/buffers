@@ -69,4 +69,17 @@ enum UInt: int
     {
         return ($s = self::getSize($n)) && $this->value >= $s->value ? $n : false;
     }
+
+    /**
+     * @return int
+     */
+    public function getByteSize(): int
+    {
+        return match ($this) {
+            self::Byte => 1,
+            self::Bytes2 => 2,
+            self::Bytes4 => 4,
+            self::Bytes8 => 8,
+        };
+    }
 }
