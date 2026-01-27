@@ -206,14 +206,14 @@ class TlvCodecTest extends TestCase
     public function testNullAlwaysHasZeroLength(): void
     {
         $frame = new Frame(
-            PingFrame::Ping,
+            PingFrame::Pong,
             new Param(TlvParamType::Null, null)
         );
 
         $env = new Envelope(PingProtocol::V1, $frame);
         $hex = bin2hex(TlvBinaryCodec::encode($env));
 
-        $expected = "01010101" . "00" . "00";
+        $expected = "01010201" . "00" . "00";
         $this->assertSame($expected, $hex);
     }
 
@@ -223,14 +223,14 @@ class TlvCodecTest extends TestCase
     public function testBoolAlwaysHasLengthOne(): void
     {
         $frame = new Frame(
-            PingFrame::Ping,
+            PingFrame::Pong,
             new Param(TlvParamType::Bool, true)
         );
 
         $env = new Envelope(PingProtocol::V1, $frame);
         $hex = bin2hex(TlvBinaryCodec::encode($env));
 
-        $expected = "01010101" . "05" . "01" . "01";
+        $expected = "01010201" . "05" . "01" . "01";
         $this->assertSame($expected, $hex);
     }
     /**
