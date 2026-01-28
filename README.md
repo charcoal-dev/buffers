@@ -14,3 +14,25 @@ For detailed information, guidance, and setup instructions regarding this librar
 documentation website:
 
 [https://charcoal.dev/lib/buffers](https://charcoal.dev/lib/buffers)
+
+## Installation
+
+You can install the library via Composer:
+
+```bash
+composer require charcoal-dev/buffers
+```
+
+## Features
+
+Explore the library's features through the following guides:
+
+* **[Buffer Management](docs/buffer-management.md)**: Learn about mutable (`Buffer`) and immutable (`BufferImmutable`)
+  buffers, integer writing, and basic manipulation.
+* **[Byte Reader](docs/byte-reader.md)**: Understand how to use the sequential reader for parsing binary data.
+* **[Endianness and Byte Order](docs/byte-order.md)**: Guides on handling different byte orders (LE/BE), host
+  architecture detection, and integer packing.
+* **[TLV (Type-Length-Value) Codec](docs/tlv-codec.md)**: Documentation on the structured binary encoding and decoding
+  system.
+* **[Fixed-Length Types](docs/fixed-length-types.md)**: Overview of specialized buffers for fixed-size data like
+  cryptographic hashes or identifiers.
