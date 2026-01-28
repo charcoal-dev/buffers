@@ -45,7 +45,7 @@ final class ByteReader implements ByteArrayReaderInterface
     }
 
     /**
-     * Start reading from beginning
+     * Start reading from the beginning
      */
     public function reset(): self
     {
@@ -54,7 +54,7 @@ final class ByteReader implements ByteArrayReaderInterface
     }
 
     /**
-     * Resets pointer, gets next N bytes from top
+     * Resets a pointer, gets next N bytes from top
      */
     public function first(int $bytes): string
     {
@@ -76,7 +76,7 @@ final class ByteReader implements ByteArrayReaderInterface
     }
 
     /**
-     * Reads next N bytes, but does NOT update an internal pointer
+     * Reads next N bytes but does NOT update an internal pointer
      */
     public function lookAhead(int $bytes): string
     {
@@ -165,7 +165,7 @@ final class ByteReader implements ByteArrayReaderInterface
     }
 
     /**
-     * Manually set the pointer at specific position
+     * Manually set the pointer at a specific position
      */
     public function setPointer(int $pos): self
     {
@@ -178,7 +178,7 @@ final class ByteReader implements ByteArrayReaderInterface
     }
 
     /**
-     * Returns number of bytes remaining in buffer
+     * Returns the number of bytes remaining in the buffer
      */
     public function remaining(): int
     {
