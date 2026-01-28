@@ -12,9 +12,9 @@ use Charcoal\Buffers\Contracts\Codecs\TLV\ProtocolEnumInterface;
 use Charcoal\Buffers\Enums\ByteOrder;
 use Charcoal\Buffers\Enums\UInt;
 
-enum PingProtocol: int implements ProtocolEnumInterface
+enum PingProtocol2: int implements ProtocolEnumInterface
 {
-    case V1 = 1;
+    case V2 = 2;
 
     public function getId(): int
     {
@@ -48,6 +48,6 @@ enum PingProtocol: int implements ProtocolEnumInterface
 
     public function allowTrailingBytes(): bool
     {
-        return false;
+        return true;
     }
 }

@@ -19,15 +19,18 @@ final class TlvBinaryCodec
 {
     /**
      * @param ProtocolDefinitionInterface $protocol
-     * @param string|ReadableBufferInterface $bytes
+     * @param string|ReadableBufferInterface|ByteReader $bytes
      * @return Envelope
      */
     public static function decode(
-        ProtocolDefinitionInterface    $protocol,
-        string|ReadableBufferInterface $bytes
+        ProtocolDefinitionInterface               $protocol,
+        string|ReadableBufferInterface|ByteReader &$bytes
     ): Envelope
     {
-        $bytes = new ByteReader($bytes);
+        if (!$bytes instanceof ByteReader) {
+            $bytes = new ByteReader($bytes);
+        }
+
         $protocolEnum = $protocol->getProtocol($bytes->readUInt8());
         $byteOrder = $protocolEnum->getByteOrder();
         $framesCount = $bytes->readUInt8();
@@ -70,9 +73,12 @@ final class TlvBinaryCodec
             }
         }
 
-        if ($bytes->remaining()) {
-            throw new \UnexpectedValueException(sprintf("[%s] Unexpected bytes remaining: %d",
-                $protocolEnum->name, $bytes->remaining()));
+        if ($bytes->remaining() > 0 && !$protocolEnum->allowTrailingBytes()) {
+            throw new \UnexpectedValueException(sprintf(
+                "[%s] Unexpected trailing bytes: %d",
+                $protocolEnum->name,
+                $bytes->remaining()
+            ));
         }
 
         return new Envelope($protocolEnum, ...$frames);

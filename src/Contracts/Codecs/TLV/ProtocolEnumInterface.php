@@ -40,4 +40,6 @@ interface ProtocolEnumInterface extends \UnitEnum
      * Maximum length of a parameter value.
      */
     public function getMaxLength(): int;
+
+    public function allowTrailingBytes(): bool;
 }

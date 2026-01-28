@@ -13,9 +13,11 @@ use Charcoal\Buffers\Codecs\TLV\Frame;
 use Charcoal\Buffers\Codecs\TLV\Param;
 use Charcoal\Buffers\Codecs\TLV\TlvBinaryCodec;
 use Charcoal\Buffers\Codecs\TLV\Types\TlvParamType;
+use Charcoal\Buffers\Tests\Fixture\Codec\PingCodecDef2;
 use Charcoal\Buffers\Tests\Fixture\Codec\PingCodecDefinition;
 use Charcoal\Buffers\Tests\Fixture\Codec\PingFrame;
 use Charcoal\Buffers\Tests\Fixture\Codec\PingProtocol;
+use Charcoal\Buffers\Tests\Fixture\Codec\PingProtocol2;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -348,5 +350,28 @@ class TlvCodecTest extends TestCase
 
         $expected = "0102" . "0101010101" . "0101010102";
         $this->assertSame($expected, $hex);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDecodePartialBuffer(): void
+    {
+        $protocol = new PingCodecDef2();
+        $frame = new Frame(PingFrame::Ping, new Param(TlvParamType::UInt8, 42));
+        $envelope = new Envelope(PingProtocol2::V2, $frame);
+        $encoded = TlvBinaryCodec::encode($envelope);
+
+        $extraBytes = "extra-data";
+        $buffer = $encoded . $extraBytes;
+
+        // Use a variable to pass by reference
+        $input = $buffer;
+        $decoded = TlvBinaryCodec::decode($protocol, $input);
+
+        $this->assertInstanceOf(\Charcoal\Buffers\Support\ByteReader::class, $input);
+        $this->assertSame(strlen($extraBytes), $input->remaining());
+        $this->assertSame($extraBytes, $input->getRest());
+        $this->assertSame(PingProtocol2::V2, $decoded->protocol);
     }
 }
