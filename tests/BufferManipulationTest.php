@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Charcoal\Buffers\Tests;
 
 use Charcoal\Buffers\Buffer;
+use Charcoal\Buffers\Enums\ByteOrder;
 
 /**
  * Class BufferManipulationTest
@@ -44,5 +45,23 @@ class BufferManipulationTest extends \PHPUnit\Framework\TestCase
         $coal = new Buffer("coal");
         $this->assertTrue($buffer1->copy(-4)->equals($coal));
         $this->assertFalse($buffer1->copy(-4)->equals(new Buffer("cola")));
+    }
+
+    public function testWriteUIntMethods(): void
+    {
+        $buffer = new Buffer();
+        $buffer->writeUInt8(0x01);
+        $buffer->writeUInt16(0x0102, ByteOrder::LittleEndian);
+        $buffer->writeUInt16(0x0304, ByteOrder::BigEndian);
+        $buffer->writeUInt32(0x05060708, ByteOrder::LittleEndian);
+        $buffer->writeUInt32(0x090A0B0C, ByteOrder::BigEndian);
+
+        $expected = "\x01" .                // UInt8: 1
+            "\x02\x01" .                    // UInt16LE: 0x0102
+            "\x03\x04" .                    // UInt16BE: 0x0304
+            "\x08\x07\x06\x05" .            // UInt32LE: 0x05060708
+            "\x09\x0A\x0B\x0C";            // UInt32BE: 0x090A0B0C
+
+        $this->assertEquals($expected, $buffer->bytes());
     }
 }

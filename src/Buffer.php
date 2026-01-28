@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace Charcoal\Buffers;
 
+use Charcoal\Buffers\Enums\ByteOrder;
+use Charcoal\Buffers\Enums\UInt;
 use Charcoal\Buffers\Traits\BufferDecodeTrait;
 use Charcoal\Buffers\Traits\ReadableBufferTrait;
 use Charcoal\Contracts\Buffers\ByteArrayInterface;
@@ -182,12 +184,36 @@ final class Buffer implements
     }
 
     /**
-     * Reverses a bytes sequence (i.e., endianness) within same instance.
+     * Reverses a bytes sequence (i.e., endianness) within the same instance.
      */
     public function reverse(): self
     {
         $this->setBuffer(strrev($this->bytes));
         return $this;
+    }
+
+    /**
+     * Appends an unsigned 8-bit integer.
+     */
+    public function writeUInt8(int $n): self
+    {
+        return $this->append(chr($n));
+    }
+
+    /**
+     * Appends an unsigned 16-bit integer.
+     */
+    public function writeUInt16(int $n, ByteOrder $order): self
+    {
+        return $this->append($order->pack32(UInt::Bytes2, $n));
+    }
+
+    /**
+     * Appends an unsigned 32-bit integer.
+     */
+    public function writeUInt32(int $n, ByteOrder $order): self
+    {
+        return $this->append($order->pack32(UInt::Bytes4, $n));
     }
 }
 
