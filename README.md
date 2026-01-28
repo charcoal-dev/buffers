@@ -16,14 +16,6 @@ documentation website:
 
 [https://charcoal.dev/lib/buffers](https://charcoal.dev/lib/buffers)
 
-## Installation
-
-You can install the library via Composer:
-
-```bash
-composer require charcoal-dev/buffers
-```
-
 ## Features
 
 Explore the library's features through the following guides:
@@ -37,3 +29,12 @@ Explore the library's features through the following guides:
   system.
 * **[Fixed-Length Types](docs/fixed-length-types.md)**: Overview of specialized buffers for fixed-size data like
   cryptographic hashes or identifiers.
+
+## Installation
+
+You can install the library via Composer:
+
+```bash
+composer require charcoal-dev/buffers
+```
+
