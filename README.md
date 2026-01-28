@@ -1,5 +1,6 @@
 # Charcoal Buffers
 
+![Tests](https://github.com/charcoal-dev/buffers/actions/workflows/tests.yml/badge.svg)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 Buffers is a library designed for the intricate handling of byte arrays. Within its suite of tools, you'll find
