@@ -13,7 +13,7 @@ use Charcoal\Buffers\Codecs\TLV\Frame;
 use Charcoal\Buffers\Codecs\TLV\Param;
 use Charcoal\Buffers\Codecs\TLV\TlvBinaryCodec;
 use Charcoal\Buffers\Codecs\TLV\Types\TlvParamType;
-use Charcoal\Buffers\Tests\Fixture\Codec\PingCodecTest;
+use Charcoal\Buffers\Tests\Fixture\Codec\PingCodecDefinition;
 use Charcoal\Buffers\Tests\Fixture\Codec\PingFrame;
 use Charcoal\Buffers\Tests\Fixture\Codec\PingProtocol;
 use PHPUnit\Framework\TestCase;
@@ -29,7 +29,7 @@ class TlvCodecTest extends TestCase
      */
     public function testPingProtocol(): void
     {
-        $protocol = new PingCodecTest();
+        $protocol = new PingCodecDefinition();
 
         // Create a Ping frame with a timestamp and a message
         $timestamp = time();
@@ -67,7 +67,7 @@ class TlvCodecTest extends TestCase
      */
     public function testVariousDataTypes(): void
     {
-        $protocol = new PingCodecTest();
+        $protocol = new PingCodecDefinition();
 
         $frame = new Frame(
             PingFrame::Ping,
@@ -101,7 +101,7 @@ class TlvCodecTest extends TestCase
      */
     public function testLongString(): void
     {
-        $protocol = new PingCodecTest();
+        $protocol = new PingCodecDefinition();
 
         // TlvParamType::String uses UInt::Bytes2 for length, so up to 65535 bytes
         $longString = str_repeat("A", 500);

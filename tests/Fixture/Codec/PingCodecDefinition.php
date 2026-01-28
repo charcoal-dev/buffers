@@ -14,7 +14,7 @@ use Charcoal\Buffers\Contracts\Codecs\TLV\ParamTypeEnumInterface;
 use Charcoal\Buffers\Contracts\Codecs\TLV\ProtocolDefinitionInterface;
 use Charcoal\Buffers\Contracts\Codecs\TLV\ProtocolEnumInterface;
 
-class PingCodecTest implements ProtocolDefinitionInterface
+class PingCodecDefinition implements ProtocolDefinitionInterface
 {
     public function getProtocol(int $protocolCode): ProtocolEnumInterface
     {
