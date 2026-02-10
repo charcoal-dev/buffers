@@ -39,7 +39,7 @@ trait ReadableBufferTrait
      * @param int|null $length
      * @return string
      */
-    public function subString(int $offset, int $length = null): string
+    public function subString(int $offset, ?int $length = null): string
     {
         $off = max(-$this->length, min($offset, $this->length));
         if ($length === null) {

@@ -178,7 +178,7 @@ final class Buffer implements
     /**
      * Creates a new buffer instance with a copy of the current buffer's data.
      */
-    public function copy(int $offset = 0, int $length = null): Buffer
+    public function copy(int $offset = 0, ?int $length = null): Buffer
     {
         return new Buffer($this->subString($offset, $length));
     }
